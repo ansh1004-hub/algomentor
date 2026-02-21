@@ -70,6 +70,10 @@ function App() {
       return text || "I couldn't generate a response. Please try again.";
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+      const lowerMessage = errorMessage.toLowerCase();
+      if (lowerMessage.includes('429') || lowerMessage.includes('quota')) {
+        return "I am currently receiving too many requests! Please wait about 60 seconds and try submitting again.";
+      }
       console.error('Chat error:', errorMessage);
       return `I encountered an error: ${errorMessage}. Please make sure VITE_GEMINI_API_KEY is set in your .env file.`;
     }
