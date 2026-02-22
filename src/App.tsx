@@ -29,7 +29,13 @@ function App() {
 
     try {
       const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+      const model = genAI.getGenerativeModel({
+        model: 'gemini-2.5-flash',
+        generationConfig: {
+          temperature: 0.2,
+          maxOutputTokens: 800,
+        },
+      });
 
       const rawHistory = messagesWithNewUser.slice(0, -1).map((m) => ({
         role: m.sender === 'user' ? 'user' : 'model',
